@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Atoz') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -21,11 +21,44 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm my-2">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
+{{--                <a class="navbar-brand" href="{{ url('/') }}">--}}
+{{--                    {{ config('app.name', 'Laravel') }}--}}
+{{--                </a>--}}
+
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        @isset(Auth::user()->email)
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle font-weight-bold" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                Hello {{ Auth::user()->name ?? Auth::user()->email }}
+                            </a>
+                        @endisset
+
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                               onclick="event.preventDefault();
+                               document.getElementById('logout-form').submit();"
+                            >
+                                {{ __('Logout') }}
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </div>
+                        <div class="text-center">
+                            <h6 class="text-center"><span class="text-danger font-weight-bolder">2</span> Unpaid Order</h6>
+                        </div>
+                    </li>
+{{--                    <li class="nav-item">--}}
+{{--                        <a class="nav-link active" aria-current="page" href="#">Home</a>--}}
+{{--                    </li>--}}
+{{--                    <li class="nav-item">--}}
+{{--                        <a class="nav-link" href="#">Features</a>--}}
+{{--                    </li>--}}
+                </ul>
+
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -49,23 +82,19 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
+{{--                            <nav class="navbar navbar-expand-lg navbar-light bg-light">--}}
+                            <div class="container-fluid">
+                                <li class="nav-item">
+                                    <b><a class="nav-link active text-info" aria-current="page" href="#">Prepaid Balance</a></b>
+                                </li>
+                                <li class="nav-item">
+                                    <span> | </span>
+                                </li>
+                                <li class="nav-item">
+                                    <b><a class="nav-link text-info" href="/product">Product Page</a></b>
+                                </li>
+                            </div>
+{{--                            </nav>--}}
                         @endguest
                     </ul>
                 </div>
