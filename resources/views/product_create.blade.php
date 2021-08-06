@@ -24,7 +24,7 @@
                         <input type="text" name="price" class="form-control @error('price') is-invalid @enderror" value="{{ old('price') }}" placeholder="Price" id="price">
                         @error('price')<div class="invalid-feedback-price text-danger font-italic">{{$message}}</div>@enderror
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="mt-2 btn btn-primary btn-block">Submit</button>
                   </form>
                 </div>
             </div>
