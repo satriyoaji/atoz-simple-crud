@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header font-weight-bold">
-                    <h4>{{ __('Product Page') }}</h4>
+                    <h4><b>{{ __('Product Page') }}</b></h4>
                 </div>
 
                 <div class="card-body">

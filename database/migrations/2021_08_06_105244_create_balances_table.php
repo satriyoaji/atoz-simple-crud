@@ -17,6 +17,7 @@ class CreateBalancesTable extends Migration
             $table->id();
             $table->string('mobile_phone');
             $table->integer('value');
+            $table->integer('value_after')->nullable();
             $table->string('order_no')->unique()->nullable();
             $table->timestamps();
         });

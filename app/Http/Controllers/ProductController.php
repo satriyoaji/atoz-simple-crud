@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductPostRequest;
 use App\Product;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -42,12 +43,20 @@ class ProductController extends Controller
      */
     public function store(ProductPostRequest $request)
     {
-
         DB::beginTransaction();
-        $create = Product::create($request->all());
+        $id = Product::insertGetId([
+            'name' => $request->name,
+            'address' => $request->address,
+            'price' => $request->price,
+            'updated_at' => Carbon::now(),
+            'created_at' => Carbon::now(),
+        ]);
+        $product = Product::find($id);
+        $item['id'] = $product;
+        $item['kind'] = 'products';
         DB::commit();
 
-        return redirect('/home')->with('status', 'Successfully create Product !');
+        return \Redirect::route('success.view', $item);
     }
 
     /**

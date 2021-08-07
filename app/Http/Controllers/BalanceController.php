@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Balance;
 use App\Http\Requests\PrepaidBalanceRequest;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -44,10 +45,18 @@ class BalanceController extends Controller
     public function store(PrepaidBalanceRequest $request)
     {
         DB::beginTransaction();
-        $create = Balance::create($request->all());
+        $id = Balance::insertGetId([
+            'mobile_phone' => $request->mobile_phone,
+            'value' => $request->value,
+            'updated_at' => Carbon::now(),
+            'created_at' => Carbon::now(),
+        ]);
+        $balance = Balance::find($id);
+        $item['id'] = $balance;
+        $item['kind'] = 'balances';
         DB::commit();
 
-        return redirect('/home')->with('status', 'Successfully topup balance !');
+        return \Redirect::route('success.view', $item);
     }
 
     /**

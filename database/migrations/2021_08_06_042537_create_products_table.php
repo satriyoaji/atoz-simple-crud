@@ -18,6 +18,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('address');
             $table->integer('price');
+            $table->integer('price_after')->nullable();
             $table->string('order_no')->unique()->nullable();
             $table->timestamps();
         });

@@ -24,3 +24,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('product', 'ProductController');
 
 Route::resource('prepaid-balance', 'BalanceController');
+
+Route::post('/payment', 'PaymentController@store')->name('payment.store');
+Route::get('/success', 'PaymentController@successView')->name('success.view');
+Route::get('/payment', 'PaymentController@show')->name('payment.show');
+Route::get('/order', 'PaymentController@index')->name('payment.index');

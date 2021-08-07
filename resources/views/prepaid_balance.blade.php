@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header font-weight-bold">
-                    <h4>{{ __('Prepaid Balance') }}</h4>
+                    <h4><b>{{ __('Prepaid Balance') }}</b></h4>
                 </div>
 
                 <div class="card-body">
