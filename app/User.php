@@ -28,6 +28,10 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    protected $appends = [
+        'unpaid_order',
+    ];
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -36,6 +40,20 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function getUnpaidOrderAttribute()
+    {
+        $processedStatus = PaidStatus::where('slug', 'process')->first();
+        $productUnpaid = Product::where('created_by', auth()->user()->id)
+            ->where('paid_status_id', $processedStatus->id)
+            ->count();
+        $balanceUnpaid = Balance::where('created_by', auth()->user()->id)
+            ->where('paid_status_id', $processedStatus->id)
+            ->count();
+
+        return ($productUnpaid+$balanceUnpaid);
+    }
 
     public function balances()
     {

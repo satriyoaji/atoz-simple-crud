@@ -28,4 +28,4 @@ Route::resource('prepaid-balance', 'BalanceController');
 Route::post('/payment-store', 'PaymentController@store')->name('payment.store');
 Route::get('/success', 'PaymentController@successView')->name('success.view');
 Route::post('/payment', 'PaymentController@order')->name('payment.order');
-Route::get('/order', 'PaymentController@index')->name('payment.index');
+Route::get('/order', 'PaymentController@indexOrder')->name('order-history');

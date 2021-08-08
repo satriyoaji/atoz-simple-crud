@@ -18,6 +18,7 @@
                           @error('order_no')<div class="invalid-feedback-order_no text-danger font-italic">{{$message}}</div>@enderror
                       </div>
                       <input type="hidden" name="type" value="{{ $data->type }}">
+                      <input type="hidden" name="payment_id" value="{{ $data->id }}">
                       <button type="submit" class="mt-2 btn btn-primary btn-block">Pay Now</button>
                   </form>
                 </div>

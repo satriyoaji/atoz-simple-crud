@@ -50,8 +50,13 @@
                                 @csrf
                             </form>
                         </div>
+{{--                            @php--}}
+{{--                            dd(Auth::user());--}}
+{{--                            @endphp--}}
                         <div class="text-center">
-                            <h6 class="text-center"><span class="text-danger font-weight-bolder">2</span> Unpaid Order</h6>
+                            @isset(Auth::user()->unpaid_order)
+                            <h6 class="text-center"><span class="text-danger font-weight-bolder">{{Auth::user()->unpaid_order}}</span> Unpaid Order</h6>
+                            @endisset
                         </div>
                     </li>
 {{--                    <li class="nav-item">--}}

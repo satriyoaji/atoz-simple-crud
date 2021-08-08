@@ -14,4 +14,8 @@ class Product extends Model
     {
         return $this->belongsTo(User::class, 'created_by');
     }
+    public function paidStatus()
+    {
+        return $this->belongsTo(PaidStatus::class, 'paid_status_id');
+    }
 }

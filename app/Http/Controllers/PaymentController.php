@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Balance;
+use App\PaidStatus;
 use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,9 +15,9 @@ class PaymentController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function indexOrder(Request $request)
     {
-//        return view('payment_index');
+        return view('order_history');
     }
 
     public function successView(Request $request)
@@ -82,8 +83,21 @@ class PaymentController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
-        return view('success_order', compact('data'));
+        DB::beginTransaction();
+        $successPaid = PaidStatus::where('slug', 'success')->first();
+        if ($request->type == 'product'){
+            $data = Product::where('order_no', $request->order_no)->update([
+                'paid_status_id' => $successPaid->id
+            ]);
+        }
+        elseif ($request->type == 'balance'){
+            $data = Balance::where('order_no', $request->order_no)->update([
+                'paid_status_id' => $successPaid->id
+            ]);
+        }
+        DB::commit();
+
+        return redirect()->route('order-history', $request->order_no);
     }
 
 }
