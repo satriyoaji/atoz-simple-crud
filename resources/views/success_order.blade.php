@@ -10,7 +10,7 @@
                 </div>
 
                 <div class="card-body">
-                  <form method="POST" action="{{ route('payment.store') }}">
+                  <form method="POST" action="{{ route('payment.order') }}">
                     @csrf
                       <div class="row py-2">
                           <div class="col-12 d-flex justify-content-between mx-2 font-weight-bolder">
@@ -58,9 +58,14 @@
                           <div class="mt-4 col-12 mx-2">
                               <div>
                                 <button type="submit" class="mt-2 btn btn-primary btn-block">Pay Now</button>
+{{--                                  <a class="mt-2 btn btn-primary btn-block" href="{{ route('payment.show').'?order_no='.$data->order_no.'&type='.$data->kind }}">--}}
+{{--                                      Pay Now--}}
+{{--                                  </a>--}}
                               </div>
                           </div>
                       </div>
+                      <input type="hidden" name="order_no" value="{{ $data->order_no }}">
+                      <input type="hidden" name="type" value="{{ $data->kind }}">
                   </form>
                 </div>
             </div>

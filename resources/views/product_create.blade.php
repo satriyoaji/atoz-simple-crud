@@ -10,6 +10,12 @@
                 </div>
 
                 <div class="card-body">
+                    @if (\Session::has('error'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {!! \Session::get('error') !!}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
                   <form method="POST" action="{{ route('product.store') }}">
                       @csrf
                     <div class="form-group">
