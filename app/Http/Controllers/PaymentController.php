@@ -21,12 +21,12 @@ class PaymentController extends Controller
 
     public function successView(Request $request)
     {
-        if(isset($request->kind) && isset($request->id)){
+        if(isset($request->type) && isset($request->id)){
 
-            if ($request->kind == 'products'){
+            if ($request->type == 'product'){
                 $data = Product::find($request->id);
                 $data->priceAfter = ($data->price + 10000);
-            }elseif ($request->kind == 'balances'){
+            }elseif ($request->type == 'balance'){
                 $data = Balance::find($request->id);
                 $data->valueAfter = ($data->value + (0.05*$data->value));
             }
@@ -37,20 +37,20 @@ class PaymentController extends Controller
                 $randomNumber .= mt_rand(0, 9);
             }
             # update price/value after and order_no
-            if ($request->kind == 'products'){
+            if ($request->type == 'product'){
                 $update = Product::where('id', $data->id)->update([
                     'order_no' => $randomNumber,
                     'price_after' => $data->priceAfter,
                 ]);
                 $data = Product::find($data->id);
-                $data->kind = 'product';
-            }elseif ($request->kind == 'balances'){
+                $data->type = 'product';
+            }elseif ($request->type == 'balance'){
                 $update = Balance::where('id', $data->id)->update([
                     'order_no' => $randomNumber,
                     'value_after' => $data->valueAfter,
                 ]);
                 $data = Balance::find($data->id);
-                $data->kind = 'balance';
+                $data->type = 'balance';
             }
             DB::commit();
 
@@ -64,10 +64,14 @@ class PaymentController extends Controller
     public function order(Request $request)
     {
         if(isset($request->type) && isset($request->order_no)){
-            if ($request->type == 'product')
+            if ($request->type == 'product'){
                 $data = Product::where('order_no', $request->order_no)->first();
-            elseif ($request->type == 'balance')
+                $data->type = 'product';
+            }
+            elseif ($request->type == 'balance'){
                 $data = Balance::where('order_no', $request->order_no)->first();
+                $data->type = 'balance';
+            }
             else
                 return redirect()->back()->with('error', 'invalid redirect directly to the payment page');
 
@@ -78,7 +82,7 @@ class PaymentController extends Controller
 
     public function store(Request $request)
     {
-
+        dd($request->all());
         return view('success_order', compact('data'));
     }
 

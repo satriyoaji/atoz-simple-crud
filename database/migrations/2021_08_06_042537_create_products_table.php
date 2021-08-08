@@ -20,6 +20,7 @@ class CreateProductsTable extends Migration
             $table->integer('price');
             $table->integer('price_after')->nullable();
             $table->string('order_no')->unique()->nullable();
+            $table->unsignedBigInteger('created_by');
             $table->timestamps();
         });
     }

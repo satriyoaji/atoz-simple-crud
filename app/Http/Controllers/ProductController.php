@@ -48,12 +48,13 @@ class ProductController extends Controller
             'name' => $request->name,
             'address' => $request->address,
             'price' => $request->price,
+            'created_by' => $request->user()->id,
             'updated_at' => Carbon::now(),
             'created_at' => Carbon::now(),
         ]);
         $product = Product::find($id);
         $item['id'] = $product;
-        $item['kind'] = 'products';
+        $item['type'] = 'product';
         DB::commit();
 
         return \Redirect::route('success.view', $item);

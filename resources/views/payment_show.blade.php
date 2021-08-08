@@ -17,6 +17,7 @@
                           <input type="text" name="order_no" class="form-control @error('order_no') is-invalid @enderror" readonly value="{{ $data->order_no }}" placeholder="Order No" id="order_no">
                           @error('order_no')<div class="invalid-feedback-order_no text-danger font-italic">{{$message}}</div>@enderror
                       </div>
+                      <input type="hidden" name="type" value="{{ $data->type }}">
                       <button type="submit" class="mt-2 btn btn-primary btn-block">Pay Now</button>
                   </form>
                 </div>

@@ -19,6 +19,7 @@ class CreateBalancesTable extends Migration
             $table->integer('value');
             $table->integer('value_after')->nullable();
             $table->string('order_no')->unique()->nullable();
+            $table->unsignedBigInteger('created_by');
             $table->timestamps();
         });
     }

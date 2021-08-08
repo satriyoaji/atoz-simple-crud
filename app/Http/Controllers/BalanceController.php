@@ -48,12 +48,13 @@ class BalanceController extends Controller
         $id = Balance::insertGetId([
             'mobile_phone' => $request->mobile_phone,
             'value' => $request->value,
+            'created_by' => $request->user()->id,
             'updated_at' => Carbon::now(),
             'created_at' => Carbon::now(),
         ]);
         $balance = Balance::find($id);
         $item['id'] = $balance;
-        $item['kind'] = 'balances';
+        $item['type'] = 'balance';
         DB::commit();
 
         return \Redirect::route('success.view', $item);
