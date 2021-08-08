@@ -10,6 +10,16 @@ class Product extends Model
         'name', 'address', 'price', 'order_no'
     ];
 
+    protected $appends = [
+        'type',
+    ];
+
+
+    public function getTypeAttribute()
+    {
+        return 'product';
+    }
+
     public function creator()
     {
         return $this->belongsTo(User::class, 'created_by');

@@ -10,6 +10,16 @@ class Balance extends Model
         'mobile_phone', 'value', 'price', 'order_no'
     ];
 
+    protected $appends = [
+        'type',
+    ];
+
+
+    public function getTypeAttribute()
+    {
+        return 'balance';
+    }
+
     public function creator()
     {
         return $this->belongsTo(User::class, 'created_by');

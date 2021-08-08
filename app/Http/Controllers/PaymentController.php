@@ -7,6 +7,7 @@ use App\PaidStatus;
 use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\Facades\DataTables;
 
 class PaymentController extends Controller
 {
@@ -17,7 +18,23 @@ class PaymentController extends Controller
 
     public function indexOrder(Request $request)
     {
-        return view('order_history');
+        $products = Product::with('paidStatus')->get()->toArray();
+        $balances = Balance::with('paidStatus')->get()->toArray();
+        $data = array_merge($products, $balances);
+//        if($request->ajax()){
+//
+//            return DataTables::of($data)
+//                ->addColumn('action', function ($row) {
+//
+//                })
+//                ->escapeColumns([])
+//                ->make(true);
+//        }
+
+        if (isset($request->order_no))
+            return view('order_history', compact('data'))->with('success', 'Payment with order no. '.$request->order_no.' successfully paid !');
+        else
+            return view('order_history', compact('data'));
     }
 
     public function successView(Request $request)
@@ -97,7 +114,7 @@ class PaymentController extends Controller
         }
         DB::commit();
 
-        return redirect()->route('order-history', $request->order_no);
+        return redirect()->route('order-history', ['order_no'=>$request->order_no]);
     }
 
 }
