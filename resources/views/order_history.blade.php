@@ -28,7 +28,7 @@
                                 <td>
                                     <div class="d-flex flex-column justify-content-start ">
                                         <div class="d-flex justify-content-between">
-                                            <h6 class="">{{number_format($item['order_no'], 0,' ', ' ')}}</h6>
+                                            <h6 id="orderNo">{{number_format($item['order_no'], 0,' ', ' ')}}</h6>
                                             @isset($item['price_after'])
                                             <h6 class="">Rp. {{number_format($item['price_after'], 0,',', '.')}}</h6>
                                             @endisset
@@ -85,7 +85,8 @@
         for (i = 0; i < tr.length; i++) {
             td = tr[i].getElementsByTagName("td")[0];
             if (td) {
-                txtValue = td.textContent || td.innerText;
+                //getElementById("orderNo")
+                txtValue = td.textContent;
                 if (txtValue.toUpperCase().indexOf(filter) > -1) {
                     tr[i].style.display = "";
                 } else {
