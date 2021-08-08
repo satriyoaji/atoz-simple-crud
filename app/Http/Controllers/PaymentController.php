@@ -18,9 +18,18 @@ class PaymentController extends Controller
 
     public function indexOrder(Request $request)
     {
-        $products = Product::with('paidStatus')->get()->toArray();
-        $balances = Balance::with('paidStatus')->get()->toArray();
+        $products = Product::with('paidStatus')
+            ->orderBy('created_at', 'desc')
+            ->get()->toArray();
+        $balances = Balance::with('paidStatus')
+            ->orderBy('created_at', 'desc')
+            ->get()->toArray();
         $data = array_merge($products, $balances);
+
+        // sort by created_at
+        $createdAt = array_column($data, 'created_at');
+        array_multisort($createdAt, SORT_DESC, $data);
+
 //        if($request->ajax()){
 //
 //            return DataTables::of($data)
