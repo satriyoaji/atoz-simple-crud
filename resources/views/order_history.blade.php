@@ -17,6 +17,10 @@
                         </div>
                     @endif
 
+                    <div class="form-group mb-2">
+                        <input type="search" class="form-control" id="searchBar" aria-describedby="searchHelp" placeholder="search by Order no.">
+                    </div>
+
                     <table class="table">
                         <tbody>
                             @foreach($data as $item)
